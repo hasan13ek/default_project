@@ -13,7 +13,8 @@ class ChatGpt {
     ChatGpt(
         answerText: 'chat Gpt',
         createdTime: '10:00',
-        questionText: 'isming nima'),
+        questionText: 'isming nima'
+    ),
     ChatGpt(
         answerText: 'Odam san',
         createdTime: '14:00',
@@ -22,5 +23,13 @@ class ChatGpt {
         answerText: 'Teng keladigani yuq oka',
         createdTime: '8:00',
         questionText: 'flutter zurmi'),
+    ChatGpt(
+        answerText: 'Salom oka',
+        createdTime: '8:00',
+        questionText: 'salom'),
+    ChatGpt(
+        answerText: 'Hozir Yogyapti',
+        createdTime: '8:00',
+        questionText: 'qor'),
   ];
 }

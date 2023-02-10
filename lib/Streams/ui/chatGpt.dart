@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:default_project/Streams/data/models/chat_gpt_model.dart';
 import 'package:flutter/material.dart';
 
@@ -19,27 +21,31 @@ final FocusNode focusNode = FocusNode();
 TextEditingController controller = TextEditingController();
 
 class _ChatGptScreenState extends State<ChatGptScreen> {
-  // StreamController streamController = StreamController.broadcast();
-  // late StreamSubscription streamSubscription;
-  //
-  // late Stream stream = forwardDataToStream();
-  //
-  //
-  // @override
-  // void initState() {
-  //   forwardDataToStream();
-  //   streamSubscription = streamController.stream.listen((event) {
-  //     setState(() {
-  //       // stream = createNewUser(event);
-  //     });
-  //   });
-  //   super.initState();
-  // }
-  //
-  // forwardDataToStream() async {
-  //   await Future.delayed(const Duration(seconds: 3));
-  //   streamController.sink.add(ChatGpt(answerText: 'hello', createdTime: '9:40', questionText: 'salom'));
-  // }
+  StreamController<ChatGpt> streamController = StreamController<ChatGpt>.broadcast();
+  late StreamSubscription streamSubscription;
+
+  late Stream<ChatGpt> stream = forwardDataToStream();
+
+
+  @override
+  void initState() {
+    // forwardDataToStream();
+    streamSubscription = streamController.stream.listen((event) {
+      setState(() {
+        stream = createNewAnswer(event);
+      });
+    });
+    super.initState();
+  }
+
+  Stream<ChatGpt> createNewAnswer(ChatGpt chatGpt) async* {
+    yield chatGpt;
+  }
+
+  forwardDataToStream() async {
+    await Future.delayed(const Duration(seconds: 3));
+    streamController.sink.add(ChatGpt(answerText: 'hello', createdTime: '9:40', questionText: 'salom'));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +64,9 @@ class _ChatGptScreenState extends State<ChatGptScreen> {
               const Expanded(child: SizedBox()),
               ...List.generate(count, (index) {
                 return Padding(
-                  padding: const EdgeInsets.only(top: 8, left: 158.0),
+                  padding: const EdgeInsets.only(top: 8, left: 218.0),
                   child: Container(
-                    width: 220,
+                    width: 170,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(22),
                         color: Colors.white,
@@ -121,9 +127,9 @@ class _ChatGptScreenState extends State<ChatGptScreen> {
               // ),
               ...List.generate(listAnswer.length, (index) {
                 return Padding(
-                  padding: const EdgeInsets.only(top: 8, right: 158.0),
+                  padding: const EdgeInsets.only(top: 8, right: 198.0),
                   child: Container(
-                    width: 220,
+                    width: 190,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(22),
                         color: Colors.white,
@@ -207,7 +213,6 @@ class _ChatGptScreenState extends State<ChatGptScreen> {
   }
 
   _func({required String qu}) {
-    // ChatGpt.unknown.where((element) => element.questionText == qu).toString();
     var l = ChatGpt.unknown.length;
     bool isfound = false;
     for (var e in ChatGpt.unknown) {
